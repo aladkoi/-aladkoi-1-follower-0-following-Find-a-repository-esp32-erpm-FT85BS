@@ -353,6 +353,7 @@ static void button_event_cb1(void *arg, void *data) {
                 state.currentSpeed = 0;
             }
         } else if (strcmp(event_name, "BUTTON_PRESS_REPEAT") == 0) {
+            state.cr=-1;
             if (state.croiuse_level < len_crouise) {
                 state.croiuse_level = get_level(true);
                 if (state.croiuse_level < 1) state.croiuse_level = 0;
