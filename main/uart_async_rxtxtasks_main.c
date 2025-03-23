@@ -28,7 +28,7 @@
 #define POWER_PIN 4
 #define BREAK_PIN 36 // Вход стоп-сигнала
 #define UART_NUM UART_NUM_1
-#define BUF_SIZE 1024
+#define BUF_SIZE 2048
 #define RX_TIMEOUT (1000 / portTICK_PERIOD_MS)
 
 // Структура состояния системы
@@ -566,7 +566,7 @@ static void loop_controller(void* parameter) {
                 state.operation = 0;
                 sendBufferToController(start_buffer, sizeof(start_buffer));
             } else {
-                wait_time = 50 / portTICK_PERIOD_MS;
+                wait_time = 250 / portTICK_PERIOD_MS;
                 if (state.operation == 1) {
                     if (state.count_telemtr == 0 || state.count_telemtr == 4 || state.count_telemtr == 8 ||
                         state.count_telemtr == 12 || state.count_telemtr == 16) {
@@ -640,7 +640,7 @@ void app_main(void) {
 
     ESP_ERROR_CHECK(uart_param_config(UART_NUM, &uart_config));
     ESP_ERROR_CHECK(uart_set_pin(UART_NUM, 17, 16, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
-    ESP_ERROR_CHECK(uart_driver_install(UART_NUM, BUF_SIZE * 2, BUF_SIZE * 2, 20, &uart_queue, 0));
+    ESP_ERROR_CHECK(uart_driver_install(UART_NUM, BUF_SIZE, BUF_SIZE, 20, &uart_queue, 0));
     ESP_ERROR_CHECK(uart_enable_rx_intr(UART_NUM));
 
     printf("Start prog\n");
